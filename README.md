@@ -2,7 +2,8 @@
 
 [![GoDoc](https://godoc.org/github.com/jeremmfr/junosdecode/jdecode?status.svg)](https://godoc.org/github.com/jeremmfr/junosdecode/jdecode)
 [![Report Card](https://goreportcard.com/badge/github.com/jeremmfr/junosdecode/jdecode)](https://goreportcard.com/report/github.com/jeremmfr/junosdecode/jdecode)
-[![Build Status](https://travis-ci.org/jeremmfr/junosdecode.svg?branch=master)](https://travis-ci.org/jeremmfr/junosdecode)
+[![Go Status](https://github.com/jeremmfr/junosdecode/workflows/Go%20Tests/badge.svg)](https://github.com/jeremmfr/junosdecode/actions)
+[![Lint Status](https://github.com/jeremmfr/junosdecode/workflows/GolangCI-Lint/badge.svg)](https://github.com/jeremmfr/junosdecode/actions)
 [![codecov](https://codecov.io/gh/jeremmfr/junosdecode/branch/master/graph/badge.svg)](https://codecov.io/gh/jeremmfr/junosdecode)
 
 Library to decode Juniper password hashes ($9$)
