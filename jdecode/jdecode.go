@@ -87,7 +87,6 @@ func initialize() {
 			extra[c] = 3 - i
 		}
 	}
-
 }
 
 // gapDecode

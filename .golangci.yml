@@ -1,0 +1,7 @@
+run:
+  timeout: 5m
+linters:
+  enable-all: true
+  disable:
+    - wsl
+    - gochecknoglobals
