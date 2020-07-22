@@ -5,4 +5,5 @@ linters:
   disable:
     - wsl
     - gochecknoglobals
+    - gofumpt
     - gomnd

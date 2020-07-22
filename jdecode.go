@@ -1,7 +1,7 @@
-package jdecode
+package junosdecode
 
 import (
-	"fmt"
+	"errors"
 	"strings"
 )
 
@@ -43,7 +43,7 @@ var alphaNum map[rune]int
 
 var extra map[rune]int
 
-// Decode Junos password $9$
+// Decode Junos password $9$.
 func Decode(passwordCoded string) (string, error) {
 	initialize()
 	chars := strings.TrimPrefix(passwordCoded, magic)
@@ -72,7 +72,7 @@ func Decode(passwordCoded string) (string, error) {
 	return passwordDecoded, nil
 }
 
-// initialize fill numAlpha, alphaNum, extra with family
+// initialize fill numAlpha, alphaNum, extra with family.
 func initialize() {
 	numAlpha = make(map[int]rune)
 	alphaNum = make(map[rune]int)
@@ -89,12 +89,14 @@ func initialize() {
 	}
 }
 
-// gapDecode
+var errorDiffGapDec = errors.New("nibble and decode size not the same")
+
+// gapDecode.
 func gapDecode(gaps []int, dec []int) (string, error) {
 	var num int
 
 	if len(gaps) != len(dec) {
-		return "", fmt.Errorf("nibble and decode size not the same")
+		return "", errorDiffGapDec
 	}
 	for i, gap := range gaps {
 		num += gap * dec[i]
@@ -112,7 +114,7 @@ func nibble(cref string, length int) (string, string) {
 	return strings.Join(crefSplit[0:length], ""), strings.Join(crefSplit[length:], "")
 }
 
-// gap betwean characters
+// gap betwean characters.
 func gap(c1 string, c2 string) int {
 	c1rune := []rune(c1)
 	c2rune := []rune(c2)
@@ -120,7 +122,7 @@ func gap(c1 string, c2 string) int {
 	return pmod((alphaNum[c2rune[0]]-alphaNum[c1rune[0]]), (len(numAlpha))) - 1
 }
 
-// modulus positive (same as python)
+// modulus positive (same as python).
 func pmod(d, m int) int {
 	res := d % m
 	if (res < 0 && m > 0) || (res > 0 && m < 0) {

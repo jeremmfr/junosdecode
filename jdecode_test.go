@@ -1,10 +1,12 @@
-package jdecode
+package junosdecode_test
 
 import (
 	"testing"
+
+	. "github.com/jeremmfr/junosdecode"
 )
 
-// TestDecode example password
+// TestDecode example password.
 func TestDecode(t *testing.T) {
 	junwordCoded := "$9$1HFIyKXxdsgJ-VH.Pfn6lKMXdsZUi5Qnikfz"
 	word := "testPassWord"
