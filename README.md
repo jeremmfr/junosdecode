@@ -1,7 +1,7 @@
 # junosdecode
 
-[![GoDoc](https://godoc.org/github.com/jeremmfr/junosdecode/jdecode?status.svg)](https://godoc.org/github.com/jeremmfr/junosdecode/jdecode)
-[![Report Card](https://goreportcard.com/badge/github.com/jeremmfr/junosdecode/jdecode)](https://goreportcard.com/report/github.com/jeremmfr/junosdecode/jdecode)
+[![GoDoc](https://godoc.org/github.com/jeremmfr/junosdecode?status.svg)](https://godoc.org/github.com/jeremmfr/junosdecode)
+[![Report Card](https://goreportcard.com/badge/github.com/jeremmfr/junosdecode)](https://goreportcard.com/report/github.com/jeremmfr/junosdecode)
 [![Go Status](https://github.com/jeremmfr/junosdecode/workflows/Go%20Tests/badge.svg)](https://github.com/jeremmfr/junosdecode/actions)
 [![Lint Status](https://github.com/jeremmfr/junosdecode/workflows/GolangCI-Lint/badge.svg)](https://github.com/jeremmfr/junosdecode/actions)
 [![codecov](https://codecov.io/gh/jeremmfr/junosdecode/branch/master/graph/badge.svg)](https://codecov.io/gh/jeremmfr/junosdecode)
@@ -26,8 +26,9 @@ func main() {
      if err != nil {
           fmt.Print(err.Error())
      }
+     
      fmt.Print(passwordDecoded)
 }
 
 ```
-Play : https://play.golang.org/p/7zyZ01DxHQw
+Play : https://play.golang.org/p/HpGiCYMjV5W
