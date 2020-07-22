@@ -9,3 +9,25 @@
 Library to decode Juniper password hashes ($9$)
 
 Based on http://search.cpan.org/dist/Crypt-Juniper/lib/Crypt/Juniper.pm and https://github.com/taktv6/junoscrypt
+
+## Usage
+
+```
+package main
+
+import (
+     "fmt"
+     jdecode "github.com/jeremmfr/junosdecode"
+)
+
+func main() {
+     junwordCoded := "$9$1HFIyKXxdsgJ-VH.Pfn6lKMXdsZUi5Qnikfz"
+     passwordDecoded, err := jdecode.Decode(junwordCoded)
+     if err != nil {
+          fmt.Print(err.Error())
+     }
+     fmt.Print(passwordDecoded)
+}
+
+```
+Play : https://play.golang.org/p/7zyZ01DxHQw
