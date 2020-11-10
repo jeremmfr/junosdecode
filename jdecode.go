@@ -69,6 +69,7 @@ func Decode(passwordCoded string) (string, error) {
 		}*/
 		passwordDecoded += charsDecoded
 	}
+
 	return passwordDecoded, nil
 }
 
@@ -101,6 +102,7 @@ func gapDecode(gaps []int, dec []int) (string, error) {
 	for i, gap := range gaps {
 		num += gap * dec[i]
 	}
+
 	return string(num % 256), nil
 }
 
@@ -128,5 +130,6 @@ func pmod(d, m int) int {
 	if (res < 0 && m > 0) || (res > 0 && m < 0) {
 		return res + m
 	}
+
 	return res
 }
