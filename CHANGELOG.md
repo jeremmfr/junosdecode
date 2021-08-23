@@ -1,3 +1,7 @@
+NOTES:
+
+Go 1.16 or higher is now required to use this package
+
 ## v1.0.0
 BUG FIXES:
 * fix module path for ROOT
