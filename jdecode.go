@@ -103,7 +103,7 @@ func gapDecode(gaps []int, dec []int) (string, error) {
 		num += gap * dec[i]
 	}
 
-	return string(num % 256), nil
+	return string(rune(num % 256)), nil
 }
 
 func nibble(cref string, length int) (string, string) {
