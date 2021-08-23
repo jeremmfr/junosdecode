@@ -5,14 +5,44 @@ import (
 	"strings"
 )
 
+// MagicPrefix: Junos encrypted secret prefix.
+const MagicPrefix = "$9$"
+
+// Decode Junos encrypted secret ($9$).
+func Decode(encryptedSecret string) (secretDecoded string, _ error) {
+	initialize()
+	chars := strings.TrimPrefix(encryptedSecret, MagicPrefix)
+	var first string
+	first, chars = nibble(chars, 1)
+	firstR := []rune(first)
+	_, chars = nibble(chars, extra[firstR[0]])
+	prev := first
+	for chars != "" {
+		decode := encoding[len(secretDecoded)%len(encoding)]
+		var nib string
+		nib, chars = nibble(chars, len(decode))
+		var gaps []int
+		for _, i := range nib {
+			g := gap(prev, string(i))
+			prev = string(i)
+			gaps = append(gaps, g)
+		}
+		charsDecoded, err := gapDecode(gaps, decode)
+		if err != nil {
+			return "", err
+		}
+		secretDecoded += charsDecoded
+	}
+
+	return secretDecoded, nil
+}
+
 var family = []string{
 	"QzF3n6/9CAtpu0O",
 	"B1IREhcSyrleKvMW8LXx",
 	"7N-dVbwsY2g4oaJZGUDj",
 	"iHkq.mPf5T",
 }
-
-const magic = "$9$"
 
 var encoding = [][]int{
 	{
@@ -38,40 +68,11 @@ var encoding = [][]int{
 	},
 }
 
-var numAlpha map[int]rune
-var alphaNum map[rune]int
-
-var extra map[rune]int
-
-// Decode Junos password $9$.
-func Decode(passwordCoded string) (string, error) {
-	initialize()
-	chars := strings.TrimPrefix(passwordCoded, magic)
-	var first string
-	first, chars = nibble(chars, 1)
-	firstR := []rune(first)
-	_, chars = nibble(chars, extra[firstR[0]])
-	prev := first
-	passwordDecoded := ""
-	for chars != "" {
-		decode := encoding[len(passwordDecoded)%len(encoding)]
-		var nib string
-		nib, chars = nibble(chars, len(decode))
-		var gaps []int
-		for _, i := range nib {
-			g := gap(prev, string(i))
-			prev = string(i)
-			gaps = append(gaps, g)
-		}
-		charsDecoded, _ := gapDecode(gaps, decode)
-		/*if err != nil {
-			return "", err
-		}*/
-		passwordDecoded += charsDecoded
-	}
-
-	return passwordDecoded, nil
-}
+var (
+	numAlpha map[int]rune
+	alphaNum map[rune]int
+	extra    map[rune]int
+)
 
 // initialize fill numAlpha, alphaNum, extra with family.
 func initialize() {
@@ -90,14 +91,17 @@ func initialize() {
 	}
 }
 
-var errorDiffGapDec = errors.New("nibble and decode size not the same")
+// ErrDiffGapDec is returned when can't decode a character due to a missing or extra character(s).
+//
+// This is detected by a difference in length of the internal `gaps` and `decode` list.
+var ErrDiffGapDec = errors.New("junosdecode: missing or extra character(s) (gaps and decode size not the same)")
 
 // gapDecode.
 func gapDecode(gaps []int, dec []int) (string, error) {
 	var num int
 
 	if len(gaps) != len(dec) {
-		return "", errorDiffGapDec
+		return "", ErrDiffGapDec
 	}
 	for i, gap := range gaps {
 		num += gap * dec[i]

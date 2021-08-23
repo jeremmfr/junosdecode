@@ -2,9 +2,15 @@ NOTES:
 
 Go 1.16 or higher is now required to use this package
 
+ENHANCEMENTS:
+
+* export constant `MagicPrefix`
+* export variable `ErrDiffGapDec`
+* generate an error when missing or extra character(s) detected in encoded string
 BUG FIXES:
 
 * fix conversion of the character in string from the rune number (compatibility with latest golang version)
+* fix name of Decode function variables (password to secret)
 
 ## v1.0.0
 
