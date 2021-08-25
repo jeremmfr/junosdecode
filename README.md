@@ -1,6 +1,7 @@
 # junosdecode
 
 [![GoDoc](https://godoc.org/github.com/jeremmfr/junosdecode?status.svg)](https://godoc.org/github.com/jeremmfr/junosdecode)
+[![Release](https://img.shields.io/github/v/release/jeremmfr/junosdecode)](https://github.com/jeremmfr/junosdecode/releases)
 [![Report Card](https://goreportcard.com/badge/github.com/jeremmfr/junosdecode)](https://goreportcard.com/report/github.com/jeremmfr/junosdecode)
 [![Go Status](https://github.com/jeremmfr/junosdecode/workflows/Go%20Tests/badge.svg)](https://github.com/jeremmfr/junosdecode/actions)
 [![Lint Status](https://github.com/jeremmfr/junosdecode/workflows/GolangCI-Lint/badge.svg)](https://github.com/jeremmfr/junosdecode/actions)
