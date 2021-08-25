@@ -1,3 +1,5 @@
+## v1.1.0
+
 NOTES:
 
 Go 1.15 or higher is now required to use this package
