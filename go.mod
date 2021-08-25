@@ -1,3 +1,3 @@
 module github.com/jeremmfr/junosdecode
 
-go 1.16
+go 1.15

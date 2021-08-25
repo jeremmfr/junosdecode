@@ -1,6 +1,6 @@
 NOTES:
 
-Go 1.16 or higher is now required to use this package
+Go 1.15 or higher is now required to use this package
 
 ENHANCEMENTS:
 
