@@ -6,29 +6,28 @@
 [![Lint Status](https://github.com/jeremmfr/junosdecode/workflows/GolangCI-Lint/badge.svg)](https://github.com/jeremmfr/junosdecode/actions)
 [![codecov](https://codecov.io/gh/jeremmfr/junosdecode/branch/master/graph/badge.svg)](https://codecov.io/gh/jeremmfr/junosdecode)
 
-Library to decode Juniper password hashes ($9$)
+Library to decode Juniper secret hashes ($9$)
 
-Based on http://search.cpan.org/dist/Crypt-Juniper/lib/Crypt/Juniper.pm and https://github.com/taktv6/junoscrypt
+Based on [Crypt-Juniper](http://search.cpan.org/dist/Crypt-Juniper/lib/Crypt/Juniper.pm) and [taktv6/junoscrypt](https://github.com/taktv6/junoscrypt)
 
 ## Usage
 
-```
+```go
 package main
 
 import (
      "fmt"
-     jdecode "github.com/jeremmfr/junosdecode"
+     "github.com/jeremmfr/junosdecode"
 )
 
 func main() {
-     junwordCoded := "$9$1HFIyKXxdsgJ-VH.Pfn6lKMXdsZUi5Qnikfz"
-     passwordDecoded, err := jdecode.Decode(junwordCoded)
-     if err != nil {
+     junWordCoded := "$9$1HFIyKXxdsgJ-VH.Pfn6lKMXdsZUi5Qnikfz"
+     if passwordDecoded, err := junosdecode.Decode(junWordCoded); err != nil {
           fmt.Print(err.Error())
+     } else {
+          fmt.Print(passwordDecoded)
      }
-     
-     fmt.Print(passwordDecoded)
 }
-
 ```
-Play : https://play.golang.org/p/HpGiCYMjV5W
+
+Play : [here](https://play.golang.org/p/tibSxKFM_zx)

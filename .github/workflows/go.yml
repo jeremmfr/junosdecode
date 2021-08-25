@@ -1,44 +1,50 @@
 name: Go Tests
 on: [push, pull_request]
 jobs:
-  build:
-    name: Build
+  test-1_15:
+    name: Test 1.15
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go 1.13
+      - name: Set up Go 1.15
         uses: actions/setup-go@v1
         with:
-          go-version: 1.13
+          go-version: 1.15
         id: go
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Get dependencies
-        run: |
-          go get -v -t -d ./...
+      - name: Test
+        run: go test -v ./...
 
-      - name: Build
-        run: go build -v ./...
-
-  test:
-    name: Test
+  test-1_16:
+    name: Test 1.16
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go 1.13
+      - name: Set up Go 1.16
         uses: actions/setup-go@v1
         with:
-          go-version: 1.13
+          go-version: 1.16
         id: go
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Get dependencies
-        run: |
-          go get -v -t -d ./...
+      - name: Test
+        run: go test -v ./...
 
+  test-1_17:
+    name: Test 1.17
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.17
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.17
+        id: go
+      - name: Check out code
+        uses: actions/checkout@v2
       - name: Test
         run: go test -v -coverprofile=coverage.txt -covermode=atomic ./...
 
       - name: Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
         with:
           token: ${{secrets.CODECOV_TOKEN}}
           file: ./coverage.txt
