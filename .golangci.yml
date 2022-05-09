@@ -7,10 +7,12 @@ linters:
     - interfacer # deprecated 1.38
     - scopelint # deprecated 1.39
     - golint # deprecated 1.41
+    - exhaustivestruct # deprecated 1.46
     - wsl
     - gochecknoglobals
     - gomnd
     - paralleltest
+    - nonamedreturns
 linters-settings:
   govet:
     enable-all: true
