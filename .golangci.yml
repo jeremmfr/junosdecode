@@ -8,6 +8,11 @@ linters:
     - scopelint # deprecated 1.39
     - golint # deprecated 1.41
     - exhaustivestruct # deprecated 1.46
+    # ifshort # deprecated 1.48 but no replacement
+    - nosnakecase # deprecated 1.48.1
+    - structcheck # deprecated 1.49.0
+    - deadcode # deprecated 1.49.0
+    - varcheck # deprecated 1.49.0
     - wsl
     - gochecknoglobals
     - gomnd
