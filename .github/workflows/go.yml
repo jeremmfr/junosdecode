@@ -55,6 +55,20 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
       - name: Test
+        run: go test -v ./...
+
+  test-1_19:
+    name: Test 1.19
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.19
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+        id: go
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Test
         run: go test -v ./... -coverprofile=coverage.txt -covermode=atomic
 
       - name: Codecov
