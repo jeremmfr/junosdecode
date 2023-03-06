@@ -9,14 +9,31 @@ import (
 // MagicPrefix: Junos encrypted secret prefix.
 const MagicPrefix = "$9$"
 
+// ErrDiffGapDec is returned when can't decode a character due to a missing or extra character(s).
+//
+// This is detected by a difference in length of the internal `gaps` and `decode` list.
+var ErrDiffGapDec = errors.New("junosdecode: missing or extra character(s) (gaps and decode size not the same)")
+
+// ErrEmptySecret is returned when can't decode due to empty input.
+var ErrEmptySecret = errors.New("junosdecode: no secret to decode")
+
+// ErrNotEnoughChars is returned when can't decode due to not enough characters input.
+var ErrNotEnoughChars = errors.New("junosdecode: not enough characters")
+
 // Decode Junos encrypted secret ($9$).
 func Decode(encryptedSecret string) (secretDecoded string, _ error) {
-	initialize()
+	if encryptedSecret == "" {
+		return "", ErrEmptySecret
+	}
 	chars := strings.TrimPrefix(encryptedSecret, MagicPrefix)
+	if len(chars) < 3 {
+		return "", ErrNotEnoughChars
+	}
+	dict := newDictAlpha()
 	var first string
 	first, chars = nibble(chars, 1)
 	firstR := []rune(first)
-	_, chars = nibble(chars, extra[firstR[0]])
+	_, chars = nibble(chars, dict.extra[firstR[0]])
 	prev := first
 	for chars != "" {
 		decode := encoding[len(secretDecoded)%len(encoding)]
@@ -24,7 +41,7 @@ func Decode(encryptedSecret string) (secretDecoded string, _ error) {
 		nib, chars = nibble(chars, len(decode))
 		var gaps []int
 		for _, i := range nib {
-			g := gap(prev, string(i))
+			g := dict.gap(prev, string(i))
 			prev = string(i)
 			gaps = append(gaps, g)
 		}
@@ -36,13 +53,6 @@ func Decode(encryptedSecret string) (secretDecoded string, _ error) {
 	}
 
 	return secretDecoded, nil
-}
-
-var family = []string{
-	"QzF3n6/9CAtpu0O",
-	"B1IREhcSyrleKvMW8LXx",
-	"7N-dVbwsY2g4oaJZGUDj",
-	"iHkq.mPf5T",
 }
 
 var encoding = [][]int{
@@ -69,33 +79,38 @@ var encoding = [][]int{
 	},
 }
 
-var (
+type dictAlpha struct {
 	numAlpha map[int]rune
 	alphaNum map[rune]int
 	extra    map[rune]int
-)
+}
 
-// initialize fill numAlpha, alphaNum, extra with family.
-func initialize() {
-	numAlpha = make(map[int]rune)
-	alphaNum = make(map[rune]int)
-	extra = make(map[rune]int)
+// newDictAlpha create dictAlpha with data filled.
+func newDictAlpha() dictAlpha {
+	family := []string{
+		"QzF3n6/9CAtpu0O",
+		"B1IREhcSyrleKvMW8LXx",
+		"7N-dVbwsY2g4oaJZGUDj",
+		"iHkq.mPf5T",
+	}
+	dict := dictAlpha{
+		numAlpha: make(map[int]rune),
+		alphaNum: make(map[rune]int),
+		extra:    make(map[rune]int),
+	}
 	for i, r := range []rune(strings.Join(family, "")) {
-		numAlpha[i] = r
-		alphaNum[r] = i
+		dict.numAlpha[i] = r
+		dict.alphaNum[r] = i
 	}
 
 	for i, fam := range family {
 		for _, c := range fam {
-			extra[c] = 3 - i
+			dict.extra[c] = 3 - i
 		}
 	}
-}
 
-// ErrDiffGapDec is returned when can't decode a character due to a missing or extra character(s).
-//
-// This is detected by a difference in length of the internal `gaps` and `decode` list.
-var ErrDiffGapDec = errors.New("junosdecode: missing or extra character(s) (gaps and decode size not the same)")
+	return dict
+}
 
 // gapDecode.
 func gapDecode(gaps []int, dec []int) (string, error) {
@@ -122,11 +137,11 @@ func nibble(cref string, length int) (string, string) {
 }
 
 // gap betwean characters.
-func gap(c1 string, c2 string) int {
+func (d *dictAlpha) gap(c1 string, c2 string) int {
 	c1rune := []rune(c1)
 	c2rune := []rune(c2)
 
-	return pmod((alphaNum[c2rune[0]]-alphaNum[c1rune[0]]), (len(numAlpha))) - 1
+	return pmod((d.alphaNum[c2rune[0]]-d.alphaNum[c1rune[0]]), (len(d.numAlpha))) - 1
 }
 
 // modulus positive (same as python).

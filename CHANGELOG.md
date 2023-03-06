@@ -1,3 +1,9 @@
+BUG FIXES:
+
+* fix panic when call `Decode()` in parallel
+* fix panic when string input of `Decode()` is empty
+* return error when there isn't enough characters in string input of `Decode()`
+
 ## v1.1.0
 
 NOTES:

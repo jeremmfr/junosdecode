@@ -16,7 +16,6 @@ linters:
     - wsl
     - gochecknoglobals
     - gomnd
-    - paralleltest
     - nonamedreturns
 linters-settings:
   govet:
