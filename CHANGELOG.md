@@ -1,3 +1,7 @@
+# changelog
+
+## v1.1.1
+
 BUG FIXES:
 
 * fix panic when call `Decode()` in parallel
