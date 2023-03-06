@@ -9,10 +9,27 @@ import (
 // MagicPrefix: Junos encrypted secret prefix.
 const MagicPrefix = "$9$"
 
+// ErrDiffGapDec is returned when can't decode a character due to a missing or extra character(s).
+//
+// This is detected by a difference in length of the internal `gaps` and `decode` list.
+var ErrDiffGapDec = errors.New("junosdecode: missing or extra character(s) (gaps and decode size not the same)")
+
+// ErrEmptySecret is returned when can't decode due to empty input.
+var ErrEmptySecret = errors.New("junosdecode: no secret to decode")
+
+// ErrNotEnoughChars is returned when can't decode due to not enough characters input.
+var ErrNotEnoughChars = errors.New("junosdecode: not enough characters")
+
 // Decode Junos encrypted secret ($9$).
 func Decode(encryptedSecret string) (secretDecoded string, _ error) {
-	dict := newDictAlpha()
+	if encryptedSecret == "" {
+		return "", ErrEmptySecret
+	}
 	chars := strings.TrimPrefix(encryptedSecret, MagicPrefix)
+	if len(chars) < 3 {
+		return "", ErrNotEnoughChars
+	}
+	dict := newDictAlpha()
 	var first string
 	first, chars = nibble(chars, 1)
 	firstR := []rune(first)
@@ -94,11 +111,6 @@ func newDictAlpha() dictAlpha {
 
 	return dict
 }
-
-// ErrDiffGapDec is returned when can't decode a character due to a missing or extra character(s).
-//
-// This is detected by a difference in length of the internal `gaps` and `decode` list.
-var ErrDiffGapDec = errors.New("junosdecode: missing or extra character(s) (gaps and decode size not the same)")
 
 // gapDecode.
 func gapDecode(gaps []int, dec []int) (string, error) {
