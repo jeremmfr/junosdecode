@@ -5,7 +5,7 @@
 [![Report Card](https://goreportcard.com/badge/github.com/jeremmfr/junosdecode)](https://goreportcard.com/report/github.com/jeremmfr/junosdecode)
 [![Go Status](https://github.com/jeremmfr/junosdecode/workflows/Go%20Tests/badge.svg)](https://github.com/jeremmfr/junosdecode/actions)
 [![Lint Status](https://github.com/jeremmfr/junosdecode/workflows/GolangCI-Lint/badge.svg)](https://github.com/jeremmfr/junosdecode/actions)
-[![codecov](https://codecov.io/gh/jeremmfr/junosdecode/branch/master/graph/badge.svg)](https://codecov.io/gh/jeremmfr/junosdecode)
+[![codecov](https://codecov.io/gh/jeremmfr/junosdecode/branch/main/graph/badge.svg)](https://codecov.io/gh/jeremmfr/junosdecode)
 
 Library to decode Juniper secret hashes ($9$)
 
