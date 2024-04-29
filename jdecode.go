@@ -113,7 +113,7 @@ func newDictAlpha() dictAlpha {
 }
 
 // gapDecode.
-func gapDecode(gaps []int, dec []int) (string, error) {
+func gapDecode(gaps, dec []int) (string, error) {
 	var num int
 
 	if len(gaps) != len(dec) {
@@ -137,7 +137,7 @@ func nibble(cref string, length int) (string, string) {
 }
 
 // gap betwean characters.
-func (d *dictAlpha) gap(c1 string, c2 string) int {
+func (d *dictAlpha) gap(c1, c2 string) int {
 	c1rune := []rune(c1)
 	c2rune := []rune(c2)
 
