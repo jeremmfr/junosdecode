@@ -1,57 +1,77 @@
-run:
-  timeout: 5m
-
+version: "2"
 linters:
-  enable-all: true
+  default: all
   disable:
-    # deprecated
-    - exportloopref # deprecated 1.60.2
     # unwanted
     - depguard
     - gochecknoglobals
     - mnd
+    - noinlineerr
     - nonamedreturns
     - wsl
-
-linters-settings:
-  gofumpt:
-    extra-rules: true
-  govet:
-    enable-all: true
-  revive:
+    - wsl_v5
+  settings:
+    govet:
+      enable-all: true
+    revive:
+      rules:
+        # defaults
+        - name: blank-imports
+        - name: context-as-argument
+        - name: context-keys-type
+        - name: dot-imports
+        - name: empty-block
+        - name: error-naming
+        - name: error-return
+        - name: error-strings
+        - name: errorf
+        - name: exported
+        - name: increment-decrement
+        - name: indent-error-flow
+        - name: package-comments
+        - name: range
+        - name: receiver-naming
+        - name: redefines-builtin-id
+        - name: superfluous-else
+        - name: time-naming
+        - name: unexported-return
+        - name: unreachable-code
+        - name: unused-parameter
+        - name: var-declaration
+        - name: var-naming
+        # additionals
+        - name: confusing-naming
+        - name: import-alias-naming
+        - name: import-shadowing
+        - name: unhandled-error
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
     rules:
-      # defaults
-      - name: blank-imports
-      - name: context-as-argument
-      - name: context-keys-type
-      - name: dot-imports
-      - name: empty-block
-      - name: error-naming
-      - name: error-return
-      - name: error-strings
-      - name: errorf
-      - name: exported
-      - name: increment-decrement
-      - name: indent-error-flow
-      - name: package-comments
-      - name: range
-      - name: receiver-naming
-      - name: redefines-builtin-id
-      - name: superfluous-else
-      - name: time-naming
-      - name: unexported-return
-      - name: unreachable-code
-      - name: unused-parameter
-      - name: var-declaration
-      - name: var-naming
-      # additionals
-      - name: confusing-naming
-      - name: import-alias-naming
-      - name: import-shadowing
-      - name: unhandled-error
+      - linters:
+          - revive
+        path: ^example_test\.go$
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
 
-issues:
-  exclude-rules:
-    - path: '^example_test\.go$'
-      linters:
-        - revive
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+  settings:
+    gofumpt:
+      extra-rules: true
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
