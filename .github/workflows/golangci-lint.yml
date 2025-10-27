@@ -1,5 +1,7 @@
 name: GolangCI-Lint
 on: [push, pull_request]
+permissions:
+  contents: read
 jobs:
   run:
     name: Run
