@@ -1,3 +1,5 @@
+// Package junosdecode
+//
 // Library to decode Juniper secret hashes ($9$)
 package junosdecode
 
