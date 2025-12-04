@@ -7,7 +7,7 @@
 [![Lint Status](https://github.com/jeremmfr/junosdecode/workflows/GolangCI-Lint/badge.svg)](https://github.com/jeremmfr/junosdecode/actions)
 [![codecov](https://codecov.io/gh/jeremmfr/junosdecode/branch/main/graph/badge.svg)](https://codecov.io/gh/jeremmfr/junosdecode)
 
-Library to decode Juniper secret hashes ($9$)
+Library to decode Juniper secret hashes (`$9$`)
 
 Based on [Crypt-Juniper](http://search.cpan.org/dist/Crypt-Juniper/lib/Crypt/Juniper.pm) and [taktv6/junoscrypt](https://github.com/taktv6/junoscrypt)
 
